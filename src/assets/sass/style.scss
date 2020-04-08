@@ -1,4 +1,21 @@
 // Normalize
-@import 'vars/_normalize.scss';
+@import 'vars/normalize';
+@import 'vars/colors';
+
 
 // Blocks
+@import 'blocks/container';
+@import 'blocks/btn';
+@import 'blocks/section';
+@import 'blocks/profile';
+@import 'blocks/info';
+@import 'blocks/warning';
+@import 'blocks/form';
+@import 'blocks/button';
+@import 'blocks/validate';
+
+
+// Interface
+html {
+	font-family: 'Ubuntu', sans-serif;
+}

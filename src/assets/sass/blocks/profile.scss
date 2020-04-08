@@ -1,0 +1,33 @@
+.profile {
+
+	&__title {
+		font-size: 24px;
+		letter-spacing: -0.3px;
+
+		margin: 80px 0 19px;
+	}
+
+	&__description {
+		position: relative;
+
+		font-size: 14px;
+		font-style: italic;
+
+		color: $text;
+
+		&:before {
+			content: '';
+
+			position: absolute;
+			top: 7px;
+			left: -20px;
+
+			width: 16px;
+			height: 2px;
+
+			background-color: $before;
+
+			border-radius: 2px;
+		}
+	}
+}

@@ -1,0 +1,181 @@
+.form {
+
+	&__inner {
+	}
+
+	&__item {
+		position: relative;
+
+		flex-basis: 100%;
+		margin-top: 20px;
+	}
+
+	&-description__item {
+		margin-top: 18px;
+	}
+
+	&-header {
+		display: flex;
+		justify-content: space-between;
+		flex-flow: row wrap;
+
+		&__item {
+			flex-basis: 400px;
+		}
+	}
+
+	&__label {
+		position: absolute;
+		top: 8px;
+		left: 12px;
+
+		font-size: 11px;
+		font-weight: 400;
+
+		cursor: pointer;
+		user-select: none;
+
+		&--type--checkbox {
+			position: relative;
+			top: 0;
+			left: 0;
+
+			padding-left: 25px;
+
+			cursor: pointer;
+
+			display: inline-block;
+			color: #182c40;
+
+			font-family: 'Roboto', sans-serif;
+			font-size: 14px;
+			line-height: 18px;
+
+			&:before {
+				display: block;
+
+				width: 18px;
+				height: 18px;
+
+				background: url('../img/form/default-check.svg');
+
+				content: "";
+
+				position: absolute;
+				vertical-align: middle;
+				left: 0;
+				top: 0;
+			}
+
+			&:hover {
+				background-color: rgba(47, 128, 237, 0.05);
+			}
+		}
+
+		&--validate--error {
+			color: $error-text;
+		}
+
+		&--color--lt-blue {
+			color: $lt-blue;
+		}
+	}
+
+	&__input {
+		padding: 20px 0 8px 10px;
+		letter-spacing: -0.2px;
+
+		width: calc(100% - 14px);
+
+		border: 2px solid transparent;
+		border-radius: 2px;
+		background-color: #f8f7fa;
+
+		cursor: pointer;
+
+		&:hover {
+			background-color: #f1f5f9;
+		}
+
+		&:focus {
+			outline: none;
+			border: 2px solid rgba(47, 128, 237, 0.75);
+			cursor: text;
+		}
+
+		&::placeholder {
+			font-size: 14px;
+			font-weight: 400;
+
+			opacity: .5;
+		}
+
+		&--type--textarea {
+			max-width: calc(1240px - 12px);
+			min-height: calc(122px - 33px);
+			width: calc(100% - 12px);
+
+			padding: 22px 0 8px 10px;
+
+			overflow: hidden;
+		}
+
+		&--type--checkbox {
+			position: absolute;
+			width: 18px;
+			height: 18px;
+
+			overflow: hidden;
+
+			margin: 0;
+			padding: 0;
+			border: 0;
+			outline: 0;
+			opacity: 0;
+
+			&:checked + .form__label--type--checkbox:before {
+				background: url('../img/form/checked-check.svg');
+			}
+
+			&:focus {
+				cursor: pointer;
+			}
+		}
+
+		&--validate--error {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			border: 2px solid #f5bcbc;
+		}
+	}
+
+	&__button {
+
+		&--type {
+
+			&--submit {
+				color: #fff;
+				background-color: #2f80ed;
+				margin-right: 14px;
+
+				&:hover {
+					background-color: #2974d9;
+				}
+
+				&:focus {
+					outline: none;
+					border: 2px solid #97C0F6;
+				}
+
+				&:active {
+					background-color: #236acb;
+				}
+
+				&:disabled {
+					opacity: .5;
+				}
+			}
+		}
+	}
+
+}
