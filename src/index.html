@@ -41,54 +41,52 @@ title: MONQ || Test
 
                     <header class="form-header">
                         <div class="form__item form-header__item">
-                            <label class="form__label" for="group_name">Название группы</label>
                             <input class="form__input" id="group_name" type="text" placeholder="Введите название рабочей группы">
+                            <label class="form__label" for="group_name">Название группы</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <label class="form__label form__label--validate--error" for="group_alias">Алиас</label>
-                            <input class="form__input form__input--validate--error" id="group_alias" type="text" placeholder="Введите Алиас">
-                            <span class="validate validate__error">Алиас не может содержать русские буквы и пробелы</span>
-
+                            <input class="form__input" id="group_alias" type="text" placeholder="Введите Алиас">
+                            <label class="form__label" for="group_alias">Алиас</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <label class="form__label form__label--color--lt-blue" for="group_mail">Электронная почта для обращений</label>
                             <input class="form__input" id="group_mail" type="email" placeholder="Введите электронную почту">
+                            <label class="form__label" for="group_mail">Электронная почта для обращений</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <label class="form__label" for="responsible_phone">Телефон представителя</label>
                             <input class="form__input" id="responsible_phone" type="tel" placeholder="+7 (XXX) XXX-XX-XX">
+                            <label class="form__label" for="responsible_phone">Телефон представителя</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <label class="form__label" for="responsible_name">ФИО представителя</label>
                             <input class="form__input" id="responsible_name" type="text" placeholder="Введите полные данные представителя">
+                            <label class="form__label" for="responsible_name">ФИО представителя</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <label class="form__label" for="responsible_position">Должность ответственного</label>
                             <input class="form__input" id="responsible_position" type="text" placeholder="Введите полное наименование должности">
+                            <label class="form__label" for="responsible_position">Должность ответственного</label>
                         </div>
                     </header>
                     <!-- /.form__header -->
 
                     <main class="form-description">
                         <div class="form__item form-description__item">
-                            <label class="form__label" for="description_inner">Описание рабочей группы для внутреннего использования</label>
                             <textarea class="form__input form__input--type--textarea"
                                       name="inner_description"
                                       id="description_inner"
                                       maxlength="600"
                                       placeholder="Введите краткое и емкое описание (максимум 600 символов)"></textarea>
+                            <label class="form__label" for="description_inner">Описание рабочей группы для внутреннего использования</label>
                         </div>
                         <div class="form__item form-description__item">
                             <input class="form__input form__input--type--checkbox" type="checkbox" id="check_public" hidden>
                             <label class="form__label form__label--type--checkbox" for="check_public">Публичное описание отличается от внутреннего</label>
                         </div>
-                        <div class="form__item form-description__item">
-                            <label class="form__label" for="description_public">Публичное описание рабочей группы</label>
+                        <div class="form__item form-description__item form-description__item--hide" id="public_description">
                             <textarea class="form__input form__input--type--textarea"
                                       name="inner_description"
                                       id="description_public"
                                       maxlength="600"
                                       placeholder="Введите краткое и емкое описание (максимум 600 символов)"></textarea>
+                            <label class="form__label" for="description_public">Публичное описание рабочей группы</label>
                         </div>
                         <div class="form__item form-description__item">
                             <div class="buttons form__buttons">
@@ -98,7 +96,7 @@ title: MONQ || Test
                                         <button class="btn form__button form__button--type--reset" id="btn_reset">Отмена</button>
                                     </div>
                                     <div class="buttons__secondary">
-                                        <button class="btn form__button form__button--type--save" id="btn_save" disabled>Сохранить в мои черновики</button>
+                                        <button class="btn form__button form__button--type--save" id="btn_save">Сохранить в мои черновики</button>
                                     </div>
                                 </div>
                             </div>

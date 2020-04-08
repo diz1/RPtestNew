@@ -12,6 +12,19 @@
 
 	&-description__item {
 		margin-top: 18px;
+		transition: .3s;
+
+		&--hide {
+			opacity: 0;
+			height: 0;
+			visibility: hidden;
+		}
+
+		&--active {
+			opacity: 1;
+			height: 100%;
+			visibility: visible;
+		}
 	}
 
 	&-header {
@@ -101,7 +114,11 @@
 			outline: none;
 			border: 2px solid rgba(47, 128, 237, 0.75);
 			cursor: text;
+			& + .form__label {
+				color: $lt-blue;
+			}
 		}
+
 
 		&::placeholder {
 			font-size: 14px;
@@ -111,13 +128,14 @@
 		}
 
 		&--type--textarea {
-			max-width: calc(1240px - 12px);
+			max-width: calc(100% - 14px);
 			min-height: calc(122px - 33px);
 			width: calc(100% - 12px);
 
 			padding: 22px 0 8px 10px;
 
 			overflow: hidden;
+			resize: vertical;
 		}
 
 		&--type--checkbox {

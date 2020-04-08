@@ -15,6 +15,7 @@ const imagemin = require("gulp-imagemin");
 const del = require("del");
 const panini = require("panini");
 const browsersync = require("browser-sync").create();
+const babel = require("gulp-babel");
 
 
 /* Paths */
@@ -41,7 +42,7 @@ var path = {
         fonts: "src/assets/fonts/**/*.{eot,otf,ttf,woff,woff2}"
     },
     clean: "./dist"
-}
+};
 
 
 
@@ -69,7 +70,7 @@ function html() {
             partials: 'src/tpl/partials/',
             helpers: 'src/tpl/helpers/',
             data: 'src/tpl/data/'
-          }))
+        }))
         .pipe(dest(path.build.html))
         .pipe(browsersync.stream());
 }
@@ -79,10 +80,11 @@ function css() {
         .pipe(plumber())
         .pipe(sass())
         .pipe(autoprefixer({
-            cascade: true
+            cascade: true,
+            flexbox: true
         }))
         .pipe(cssbeautify())
-        .pipe(dest(path.build.css))
+        // .pipe(dest(path.build.css))
         .pipe(cssnano({
             zindex: false,
             discardComments: {
@@ -102,7 +104,10 @@ function js() {
     return src(path.src.js, {base: './src/assets/js/'})
         .pipe(plumber())
         .pipe(rigger())
-        .pipe(gulp.dest(path.build.js))
+        // .pipe(gulp.dest(path.build.js))
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
         .pipe(uglify())
         .pipe(rename({
             suffix: ".min",
