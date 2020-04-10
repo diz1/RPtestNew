@@ -44,32 +44,32 @@
             <!-- /.warning -->
 
 
-            <form action="#" class="form">
+            <form action="./mailer/mail.php" method="POST" class="form">
                 <div class="form__inner">
 
                     <header class="form-header">
                         <div class="form__item form-header__item">
-                            <input class="form__input" id="group_name" type="text" placeholder="Введите название рабочей группы">
+                            <input class="form__input" id="group_name" name="group_name" type="text" placeholder="Введите название рабочей группы" required>
                             <label class="form__label" for="group_name">Название группы</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <input class="form__input" id="group_alias" type="text" placeholder="Введите Алиас">
+                            <input class="form__input" id="group_alias" name="group_alias" type="text" placeholder="Введите Алиас"  required>
                             <label class="form__label" for="group_alias">Алиас</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <input class="form__input" id="group_mail" type="email" placeholder="Введите электронную почту">
+                            <input class="form__input" id="group_mail" name="group_mail" type="email" placeholder="Введите электронную почту"  required>
                             <label class="form__label" for="group_mail">Электронная почта для обращений</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <input class="form__input" id="responsible_phone" type="tel" placeholder="+7 (XXX) XXX-XX-XX">
+                            <input class="form__input" id="responsible_phone" name="responsible_phone" type="tel" placeholder="+7 (XXX) XXX-XX-XX"  required>
                             <label class="form__label" for="responsible_phone">Телефон представителя</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <input class="form__input" id="responsible_name" type="text" placeholder="Введите полные данные представителя">
+                            <input class="form__input" id="responsible_name" name="responsible_name" type="text" placeholder="Введите полные данные представителя"  required>
                             <label class="form__label" for="responsible_name">ФИО представителя</label>
                         </div>
                         <div class="form__item  form-header__item">
-                            <input class="form__input" id="responsible_position" type="text" placeholder="Введите полное наименование должности">
+                            <input class="form__input" id="responsible_position" name="responsible_position" type="text" placeholder="Введите полное наименование должности"  required>
                             <label class="form__label" for="responsible_position">Должность ответственного</label>
                         </div>
                     </header>
@@ -81,16 +81,16 @@
                                       name="inner_description"
                                       id="description_inner"
                                       maxlength="600"
-                                      placeholder="Введите краткое и емкое описание (максимум 600 символов)"></textarea>
+                                      placeholder="Введите краткое и емкое описание (максимум 600 символов)"  required></textarea>
                             <label class="form__label" for="description_inner">Описание рабочей группы для внутреннего использования</label>
                         </div>
-                        <div class="form__item form-description__item">
+                        <div class="form__item form-description__item form-description__item--type--checkbox">
                             <input class="form__input form__input--type--checkbox" type="checkbox" id="check_public" hidden>
-                            <label class="form__label form__label--type--checkbox" for="check_public">Публичное описание отличается от внутреннего</label>
+                            <label class="form__label form__label--type--checkbox" for="check_public"><span class="checkbox"></span>Публичное описание отличается от внутреннего</label>
                         </div>
                         <div class="form__item form-description__item form-description__item--hide" id="public_description">
                             <textarea class="form__input form__input--type--textarea"
-                                      name="inner_description"
+                                      name="public_description"
                                       id="description_public"
                                       maxlength="600"
                                       placeholder="Введите краткое и емкое описание (максимум 600 символов)"></textarea>
@@ -100,11 +100,11 @@
                             <div class="buttons form__buttons">
                                 <div class="buttons__inner">
                                     <div class="buttons__primary">
-                                        <button class="btn form__button form__button--type--submit" id="btn_confirm">Отправить на модерацию</button>
-                                        <button class="btn form__button form__button--type--reset" id="btn_reset">Отмена</button>
+                                        <button class="btn form__button form__button--type--submit" id="btn_confirm" type="submit">Отправить на модерацию</button>
+                                        <button class="btn form__button form__button--type--reset" id="btn_reset" type="reset">Отмена</button>
                                     </div>
                                     <div class="buttons__secondary">
-                                        <button class="btn form__button form__button--type--save" id="btn_save">Сохранить в мои черновики</button>
+                                        <button class="btn form__button form__button--type--save" id="btn_save" disabled>Сохранить в мои черновики</button>
                                     </div>
                                 </div>
                             </div>
