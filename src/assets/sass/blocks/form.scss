@@ -1,8 +1,5 @@
 .form {
 
-	&__inner {
-	}
-
 	&__item {
 		position: relative;
 
@@ -17,12 +14,14 @@
 		&--hide {
 			opacity: 0;
 			height: 0;
+			margin-top: 0;
 			visibility: hidden;
 		}
 
 		&--active {
 			opacity: 1;
 			height: 100%;
+			margin-top: 18px;
 			visibility: visible;
 		}
 
@@ -208,6 +207,70 @@
 					opacity: .5;
 				}
 			}
+		}
+	}
+}
+
+@media (max-width: 1200px) {
+	.form {
+
+		&-header {
+			
+			&__item {
+				flex-basis: 32%;
+			}
+		}
+	}
+}
+
+@media (max-width: 996px) {
+	.form {
+
+		&-header {
+			
+			&__item {
+				flex-basis: 49%;
+			}
+		}
+	}
+}
+
+@media (max-width: 668px) {
+	.form {
+
+		&-header {
+			
+			&__item {
+				flex-basis: 100%;
+			}
+		}
+	}
+}
+
+@media (max-width: 578px) {
+	.form{
+
+		&__label {
+			font-size: 9px;
+		}
+
+		&__input {
+
+			&::placeholder {
+				font-size: 12px;
+			}
+
+			&--type {
+
+				&--textarea {
+					padding: 26px 0 8px 10px;
+				}
+			}
+		}
+
+		&__button {
+			font-size: 12px;
+			padding: 11px 10px 9px;
 		}
 	}
 }

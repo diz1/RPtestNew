@@ -3,13 +3,31 @@
 	&__inner {
 		display: flex;
 		justify-content: space-between;
+		flex-flow: row wrap;
 
 		margin-top: 26px;
 	}
+}
 
-	&__primary {
-	}
+@media (max-width: 668px) {
+	.buttons {
 
-	&__secondary {
+		&__primary {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 5%;
+
+			flex-basis: 100%;
+		}
+
+		&__secondary {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			margin-bottom: 5%;
+
+			flex-basis: 100%;
+		}
 	}
 }

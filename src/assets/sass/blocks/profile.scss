@@ -31,3 +31,16 @@
 		}
 	}
 }
+
+@media (max-width: 578px) {
+	.profile {
+
+		&__title {
+			font-size: 22px;
+		}
+
+		&__description {
+			font-size: 12px;
+		}
+	}
+}

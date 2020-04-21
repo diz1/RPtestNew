@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const {src, dest} = require("gulp");
 const gulp = require("gulp");
@@ -19,7 +19,7 @@ const babel = require("gulp-babel");
 
 
 /* Paths */
-var path = {
+const path = {
     build: {
         html: "dist/",
         js: "dist/assets/js/",
@@ -47,20 +47,20 @@ var path = {
 
 
 /* Tasks */
-function browserSync(done) {
+const browserSync = done => {
     browsersync.init({
         server: {
             baseDir: "./dist/"
         },
         port: 3000
     });
-}
+};
 
-function browserSyncReload(done) {
+const browserSyncReload = done => {
     browsersync.reload();
-}
+};
 
-function html() {
+const html = () => {
     panini.refresh();
     return src(path.src.html, { base: "src/" })
         .pipe(plumber())
@@ -70,12 +70,12 @@ function html() {
             partials: 'src/tpl/partials/',
             helpers: 'src/tpl/helpers/',
             data: 'src/tpl/data/'
-        }))
+          }))
         .pipe(dest(path.build.html))
         .pipe(browsersync.stream());
-}
+};
 
-function css() {
+const css = () => {
     return src(path.src.css, { base: "src/assets/sass/" })
         .pipe(plumber())
         .pipe(sass())
@@ -84,7 +84,7 @@ function css() {
             flexbox: true
         }))
         .pipe(cssbeautify())
-        // .pipe(dest(path.build.css))
+        .pipe(dest(path.build.css))
         .pipe(cssnano({
             zindex: false,
             discardComments: {
@@ -98,13 +98,13 @@ function css() {
         }))
         .pipe(dest(path.build.css))
         .pipe(browsersync.stream());
-}
+};
 
-function js() {
+const js = () => {
     return src(path.src.js, {base: './src/assets/js/'})
         .pipe(plumber())
         .pipe(rigger())
-        // .pipe(gulp.dest(path.build.js))
+        .pipe(gulp.dest(path.build.js))
         .pipe(babel({
             presets: ['@babel/env']
         }))
@@ -115,34 +115,33 @@ function js() {
         }))
         .pipe(dest(path.build.js))
         .pipe(browsersync.stream());
-}
+};
 
-function images() {
+const images = () => {
     return src(path.src.images)
         .pipe(imagemin())
         .pipe(dest(path.build.images));
-}
+};
 
-function fonts() {
+const fonts = () => {
     return src(path.src.fonts)
         .pipe(dest(path.build.fonts));
-}
+};
 
-function clean() {
+const clean = () => {
     return del(path.clean);
-}
+};
 
-function watchFiles() {
+const watchFiles = () => {
     gulp.watch([path.watch.html], html);
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.images], images);
     gulp.watch([path.watch.fonts], fonts);
-}
+};
 
-const build = gulp.series(clean, gulp.parallel(html, css, js, fonts, images));
-const watch = gulp.parallel(build, watchFiles, browserSync);
-
+const build = gulp.series(clean, gulp.parallel(html, css, js, fonts, images, browserSync));
+const watch = gulp.parallel(build, watchFiles, browserSyncReload);
 
 
 /* Exports Tasks */
