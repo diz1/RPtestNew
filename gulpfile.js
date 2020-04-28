@@ -84,7 +84,6 @@ const css = () => {
             flexbox: true
         }))
         .pipe(cssbeautify())
-        .pipe(dest(path.build.css))
         .pipe(cssnano({
             zindex: false,
             discardComments: {
@@ -96,7 +95,7 @@ const css = () => {
             suffix: ".min",
             extname: ".css"
         }))
-        .pipe(dest(path.build.css))
+        .pipe(gulp.dest(path.build.css))
         .pipe(browsersync.stream());
 };
 
@@ -104,7 +103,6 @@ const js = () => {
     return src(path.src.js, {base: './src/assets/js/'})
         .pipe(plumber())
         .pipe(rigger())
-        .pipe(gulp.dest(path.build.js))
         .pipe(babel({
             presets: ['@babel/env']
         }))
@@ -113,7 +111,7 @@ const js = () => {
             suffix: ".min",
             extname: ".js"
         }))
-        .pipe(dest(path.build.js))
+        .pipe(gulp.dest(path.build.js))
         .pipe(browsersync.stream());
 };
 

@@ -48,9 +48,10 @@
 
 	&__icon {
 		flex-basis: 24%;
-		height: 17px;
-		background-image: url('../img/warning/warn-icon.svg');
-		background-repeat: no-repeat;
+		margin-right: 15px;
+		//height: 17px;
+		//background-image: url('../img/warning/warn-icon.svg');
+		//background-repeat: no-repeat;
 	}
 
 	&__title {
@@ -66,6 +67,17 @@
 
 		display: block;
 	}
+}
 
+@media (max-width: 578px) {
+	.warning {
 
+		&__inner {
+			max-width: 256px;
+
+			&:before {
+				left: -63px;
+			}
+		}
+	}
 }

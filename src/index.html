@@ -26,6 +26,7 @@ title: MONQ || Test
                     <!-- /.warning__text -->
 
                     <div class="warning__icon">
+                        <i class="material-icons md-24 md-dark-lighten">warning</i>
                     </div>
                     <!-- /.warning__icon -->
 
@@ -34,7 +35,6 @@ title: MONQ || Test
 
             </div>
             <!-- /.warning -->
-
 
             <form action="./mailer/mail.php" method="POST" class="form">
                 <div class="form__inner">
@@ -88,12 +88,12 @@ title: MONQ || Test
                                       placeholder="Введите краткое и емкое описание (максимум 600 символов)"></textarea>
                             <label class="form__label" for="description_public">Публичное описание рабочей группы</label>
                         </div>
-                        
+
                         <div class="form__item form-description__item">
                             <div class="buttons form__buttons">
                                 <div class="buttons__inner">
                                     <div class="buttons__primary">
-                                        <button class="btn form__button form__button--type--submit" id="btn_confirm" type="submit">Отправить на модерацию</button>
+                                        <button class="btn form__button form__button--type--submit" id="btn_confirm" type="submit" disabled>Отправить на модерацию</button>
                                         <button class="btn form__button form__button--type--reset" id="btn_reset" type="reset">Отмена</button>
                                     </div>
                                     <div class="buttons__secondary">

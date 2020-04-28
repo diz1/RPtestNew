@@ -1,187 +1,238 @@
-//= jqsettings.js
 'use strict';
+document.addEventListener('DOMContentLoaded', () => {
+//= maskPhone
 
-// Переменные и функции
-const btnSave = document.getElementById('btn_save'),
-	warning = document.querySelector('.warning__inner'),
-	checkboxPublicName = document.getElementById('check_public'),
-	publicDescription = document.getElementById('public_description'),
-	groupName = document.querySelector('#group_name'),
-	groupAlias = document.querySelector('#group_alias'),
-	groupMail = document.querySelector('#group_mail'),
-	responsiblePhone = document.querySelector('#responsible_phone'),
-	responsibleName = document.querySelector('#responsible_name'),
-	responsiblePosition = document.querySelector('#responsible_position'),
-	descriptionInner = document.querySelector('#description_inner'),
-	descriptionPublic = document.querySelector('#description_public'),
-	inputs = document.querySelectorAll('.form__input');
 
-const checkReg = (elem, regExp, msg) => {
-		let span = document.createElement('span');
-		span.classList.toggle('validate');
-		span.classList.toggle('validate__error');
-		let lastElem = elem.parentElement.lastElementChild;
-		if (lastElem.tagName.toLowerCase() === 'span') {
-			lastElem.remove();
+	// Переменные и функции
+
+	const btnSave = document.getElementById('btn_save'),
+		btnConfirm = document.getElementById('btn_confirm'),
+		btnReset = document.getElementById('btn_reset'),
+		warning = document.querySelector('.warning__inner'),
+		infoBlock = document.querySelector('.info'),
+		inputs = document.querySelectorAll('.form__input'),
+		labels = document.querySelectorAll('.form__label'),
+		inputsTypeInput = [], inputLabels = [];
+	let inputTypeCheckbox = {}, canSave = false, errors;
+
+	inputs.forEach(item => {
+		if (item.type !== 'checkbox') {
+			inputsTypeInput.push(item);
+		} else if (item.type === 'checkbox') {
+			inputTypeCheckbox = item;
 		}
-		if (elem.classList.contains('form__input--validate--error')) {
-			elem.classList.toggle('form__input--validate--error');
-		}
-		if (elem.nextElementSibling.classList.contains('form__label--validate--error')) {
-			elem.nextElementSibling.classList.toggle('form__label--validate--error');
-		}
-		if (regExp.test(elem.value) === false) {
-			elem.classList.toggle('form__input--validate--error');
-			elem.nextElementSibling.classList.toggle('form__label--validate--error');
-			elem.parentElement.append(span);
-			span.textContent = msg;
-			return false;
-		}
-	},
-	checkEmpty = elem => {
-		let msg = 'Поле пустое, введите символы';
-		let span = document.createElement('span');
-		span.classList.toggle('validate');
-		span.classList.toggle('validate__error');
-		let lastElem = elem.parentElement.lastElementChild;
-		if (lastElem.tagName.toLowerCase() === 'span') {
-			lastElem.remove();
-		}
-		if (elem.classList.contains('form__input--validate--error')) {
-			elem.classList.toggle('form__input--validate--error');
-		}
-		if (elem.nextElementSibling.classList.contains('form__label--validate--error')) {
-			elem.nextElementSibling.classList.toggle('form__label--validate--error');
-		}
-		if (elem.value === '') {
-			elem.classList.toggle('form__input--validate--error');
-			elem.nextElementSibling.classList.toggle('form__label--validate--error');
-			elem.parentElement.append(span);
-			span.textContent = msg;
-			return false;
-		}
-	},
-	checkInputValues = () => {
-		inputs.forEach(item => {
-			item.addEventListener('input', () => {
-				if (item.type !== 'checkbox') {
-					if (item.value !== '') {
-						btnSave.removeAttribute('disabled');
+	});
+	labels.forEach(item => item.className === 'form__label' ? inputLabels.push(item) : false);
+
+
+	// Функции
+
+	const showError = (item, msg) => {
+			const span = document.createElement('span'),
+				itemParent = item.parentElement;
+
+			span.classList.toggle('validate');
+			span.classList.toggle('validate__error');
+
+			if (msg) {
+				span.textContent = msg;
+			}
+
+			inputLabels.forEach(label => {
+				if (label.parentElement === itemParent) {
+					label.classList.add('form__label--validate--error');
+				}
+			});
+
+			item.classList.add('form__input--validate--error');
+
+			itemParent.append(span);
+		},
+		delError = item => {
+			const itemParent = item.parentElement;
+
+			if (itemParent.children.length > 2) {
+				[...itemParent.children].forEach(elem => {
+					if (elem.tagName.toLowerCase() === 'span') {
+						elem.remove();
+					}
+				});
+			}
+
+			inputLabels.forEach(label => {
+				if (label.parentElement === itemParent) {
+					label.classList.remove('form__label--validate--error');
+				}
+			});
+
+			item.classList.remove('form__input--validate--error');
+		},
+		saveData = () => {
+			if (!canSave) {
+				return
+			}
+
+			inputsTypeInput.forEach(item => {
+				if (item.value.trim() !== '') {
+					localStorage.setItem(item.id, item.value.toString());
+				}
+			});
+			localStorage.setItem(inputTypeCheckbox.id, inputTypeCheckbox.checked)
+		},
+		getData = () => {
+			let indication = 0;
+			inputsTypeInput.forEach(item => {
+				if (localStorage.getItem(item.id) !== '') {
+					indication++;
+					item.value = localStorage.getItem(item.id);
+				}
+			});
+			inputTypeCheckbox.checked = localStorage.getItem(inputTypeCheckbox.id) === 'true' ? 1 : 0;
+			inputsTypeInput.forEach(item => {
+				if (item.parentElement.classList.contains('form-description__item--hide')) {
+					if (inputTypeCheckbox.checked) {
+						item.parentElement.classList.add('form-description__item--active');
 					} else {
-						btnSave.setAttribute('disabled', 'disabled');
+						item.parentElement.classList.remove('form-description__item--active');
+						item.value = '';
+						localStorage.removeItem(item.id);
 					}
 				}
 			});
-		});
-	},
-	checkInputValuesOnLoad = () => {
-		inputs.forEach(item => {
-			if (item.type !== 'checkbox') {
-				if (item.value !== '') {
-					btnSave.removeAttribute('disabled');
-				}
-			}
-		});
-	},
-	validMail = () => {
-		let regExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
-			msg = 'E-Mail не введен или введен некорректно';
-		checkReg(groupMail, regExp, msg);
-	},
-	validAlias = () => {
-		let regExp = /^[A-Za-z0-9-]+$/,
-			msg = 'Алиас не может быть пустым, содержать русские буквы, пробелы или символы';
-		checkReg(groupAlias, regExp, msg);
-	},
-	saveData = () => {
-		inputs.forEach(item => {
-			if (item.value != '' && item.type != 'checkbox') {
-				localStorage.setItem(item.name, item.value);
-			} else {
-				return;
-			}
-		});
-		// localStorage.setItem('group_name', groupName.value);
-		// localStorage.setItem('group_alias', groupAlias.value);
-		// localStorage.setItem('group_mail', groupMail.value);
-		// localStorage.setItem('responsible_phone', responsiblePhone.value);
-		// localStorage.setItem('responsible_name', responsibleName.value);
-		// localStorage.setItem('responsible_position', responsiblePosition.value);
-		// localStorage.setItem('description_inner', descriptionInner.value);
-		// localStorage.setItem('description_public', descriptionPublic.value);
-	},
-	getData = () => {
-		let indication = 0;
-		inputs.forEach(item => {
-			for (let key in localStorage) {
-				if (key === item.name && localStorage.getItem([key]) != '') {
-					item.value = localStorage.getItem([key]);
-					indication++;
-				}
-			}
-		});
-		if (indication > 0) {
-			return true;
-		}
-		return false;
-		// groupName.value = localStorage.getItem('group_name');
-		// groupAlias.value = localStorage.getItem('group_alias');
-		// groupMail.value = localStorage.getItem('group_mail');
-		// responsiblePhone.value = localStorage.getItem('responsible_phone');
-		// responsibleName.value = localStorage.getItem('responsible_name');
-		// responsiblePosition.value = localStorage.getItem('responsible_position');
-		// descriptionInner.value = localStorage.getItem('description_inner');
-		// descriptionPublic.value = localStorage.getItem('description_public');
-	},
-	showWarning = () => {
-		warning.classList.toggle('warning__inner--active');
-		btnSave.setAttribute('disabled', 'true');
-		
-		setTimeout(() => {
+
+			return indication > 0;
+
+		},
+		showWarning = () => {
 			warning.classList.toggle('warning__inner--active');
-			setTimeout(() => btnSave.removeAttribute('disabled'), 500);
-		}, 7000);
-	},
-	showPublic = () => publicDescription.classList.toggle('form-description__item--active'),
-	validName = () => {
-		checkEmpty(groupName);
-	},
-	validResponsibleName = () => {
-		checkEmpty(responsibleName);
-	},
-	validResponsiblePosition = () => {
-		checkEmpty(responsiblePosition);
-	},
-	validDescriptionInner = () => {
-		checkEmpty(descriptionInner);
-	},
-	validDescriptionPublic = () => {
-		checkEmpty(descriptionPublic);
-	};
+			btnSave.setAttribute('disabled', 'true');
 
-// Вызовы функций
-document.addEventListener('DOMContentLoaded', () => {
-	if (getData()) {
+			setTimeout(() => {
+				warning.classList.toggle('warning__inner--active');
+				// setTimeout(() => btnSave.removeAttribute('disabled'), 500);
+			}, 7000);
+		};
+
+
+	// Вызовы функций
+
+	maskPhone('#responsible_phone');
+	if (localStorage.length > 1) {
 		getData();
-		showWarning();							// Получаем данные при загрузке страницы
+		showWarning();
 	}
-	checkInputValuesOnLoad();               // Проверяем заполненность полей при загрузке для включения кнопки сохранения
-	checkInputValues();                     // Проверяем заполненность полей для включения кнопки сохранения
-});
 
-// Обработчики
-window.addEventListener('beforeunload', saveData);
-btnSave.addEventListener('click', e => {
-	e.preventDefault();
-	saveData();
-	showWarning();
-});
 
-checkboxPublicName.addEventListener('input', showPublic);
-groupAlias.addEventListener('input', validAlias);
-groupMail.addEventListener('input', validMail);
-groupName.addEventListener('input', validName);
-responsibleName.addEventListener('input', validResponsibleName);
-responsiblePosition.addEventListener('input', validResponsiblePosition);
-descriptionInner.addEventListener('input', validDescriptionInner);
-descriptionPublic.addEventListener('input', validDescriptionPublic);
+	// Обработчики событий
+
+	inputTypeCheckbox.addEventListener('change', () => {
+		inputsTypeInput.forEach(item => {
+			if (item.parentElement.classList.contains('form-description__item--hide')) {
+				item.parentElement.classList.toggle('form-description__item--active');
+			}
+		});
+	});
+	infoBlock.addEventListener('input', e => {
+		const target = e.target;
+
+		inputsTypeInput.forEach(item => {
+			if (target === item) {
+				if (item.id === 'group_name') {
+					// const regExp = /[\w\d\!\@\#\$\%\^\&\*\(\)\_\+\-\=\{\[\}\]\:\;\"\'\<\,\>\.\?\\\/\|\№]+/gi;
+					const regExp = /^[a-zа-я\s]+$/i;
+					if (regExp.test(item.value)) {
+						delError(item);
+					} else if (!regExp.test(item.value)) {
+						if (item.parentElement.children.length < 3) {
+							showError(item, 'Поле "Название группы" должно соржать только' +
+								' русские, английские буквы и символы пробела');
+						}
+					}
+				}
+				if (item.id === 'group_alias') {
+					const regExp = /^[A-Za-z0-9-]+$/;
+					if (regExp.test(item.value)) {
+						delError(item);
+					} else if (!regExp.test(item.value)) {
+						if (item.parentElement.children.length < 3) {
+							showError(item, 'Алиас не может быть пустым, содержать ' +
+								'русские буквы, пробелы или символы (кроме символа "-")');
+						}
+					}
+				}
+				if (item.id === 'group_mail') {
+					const regExp = /^([\w-]+\.)*[\w-]+@[\w-]+(\.[\w-]+)*\.[a-z]{2,6}$/;
+					if (regExp.test(item.value)) {
+						delError(item);
+					} else if (!regExp.test(item.value.toLowerCase())) {
+						if (item.parentElement.children.length < 3) {
+							showError(item, 'Некорректно заполненное поле');
+						}
+					}
+				}
+				if (item.id === 'responsible_name') {
+					const regExp = /^[a-zа-я\s]+$/i;
+					if (regExp.test(item.value)) {
+						delError(item);
+					} else if (!regExp.test(item.value.toLowerCase())) {
+						if (item.parentElement.children.length < 3) {
+							showError(item, 'Поле "ФИО представителя" должно соржать только русские, ' +
+								'английские буквы и символы пробела');
+						}
+					}
+				}
+				if (item.id === 'responsible_position') {
+					const regExp = /^[a-zа-я\s]+$/i;
+					if (regExp.test(item.value)) {
+						delError(item);
+					} else if (!regExp.test(item.value.toLowerCase())) {
+						if (item.parentElement.children.length < 3) {
+							showError(item, 'Поле "Должность ответственного" должно соржать только русские, ' +
+								'английские буквы и символы пробела');
+						}
+					}
+				}
+			}
+		});
+		errors = document.querySelectorAll('span.validate');
+
+		const values = inputsTypeInput.filter(item => {
+			if ((errors && errors.length === 0) && item.value.trim() !== '') {
+				return item;
+			}
+		});
+
+		if (values.length > 0) {
+			canSave = true;
+			btnConfirm.removeAttribute('disabled');
+			btnSave.removeAttribute('disabled');
+			return
+		}
+		canSave = false;
+		btnConfirm.setAttribute('disabled','true');
+		btnSave.setAttribute('disabled','true');
+	});
+
+	infoBlock.addEventListener('click', e => {
+		const target = e.target;
+		if (target === btnReset) {
+			inputTypeCheckbox.checked = false;
+			inputsTypeInput.forEach(item => {
+				delError(item);
+
+				if (item.parentElement.classList.contains('form-description__item--hide')) {
+					item.parentElement.classList.remove('form-description__item--active');
+					item.parentElement.value = '';
+				}
+			});
+			btnConfirm.setAttribute('disabled','true');
+			btnSave.setAttribute('disabled','true');
+		}
+		if (target === btnSave) {
+			e.preventDefault();
+			saveData();
+			showWarning();
+		}
+	});
+	window.addEventListener('beforeunload', saveData);
+});

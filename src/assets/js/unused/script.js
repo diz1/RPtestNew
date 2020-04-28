@@ -1,7 +1,4 @@
-// Маска для номера телефона
-$("#responsible_phone").mask("+7(999)999-99-99");
-
-// Маска для емэйла
+//= jqsettings.js
 'use strict';
 
 // Переменные и функции
@@ -71,7 +68,7 @@ const checkReg = (elem, regExp, msg) => {
 					if (item.value !== '') {
 						btnSave.removeAttribute('disabled');
 					} else {
-						btnSave.setAttribute('disabled', 'disabled');
+						btnSave.setAttribute('disabled', 'true');
 					}
 				}
 			});
@@ -139,7 +136,7 @@ const checkReg = (elem, regExp, msg) => {
 	showWarning = () => {
 		warning.classList.toggle('warning__inner--active');
 		btnSave.setAttribute('disabled', 'true');
-		
+
 		setTimeout(() => {
 			warning.classList.toggle('warning__inner--active');
 			setTimeout(() => btnSave.removeAttribute('disabled'), 500);

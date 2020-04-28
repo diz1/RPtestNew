@@ -24,10 +24,6 @@
 			margin-top: 18px;
 			visibility: visible;
 		}
-
-		&--type--checkbox {
-
-		}
 	}
 
 	&-header {
@@ -178,6 +174,16 @@
 			border-bottom-left-radius: 0;
 			border-bottom-right-radius: 0;
 			border: 2px solid #f5bcbc;
+
+			&:focus {
+				border-color: #f5bcbc;
+			}
+
+			&.form__input:focus {
+				& + .form__label {
+					color: $error-text;
+				}
+			}
 		}
 	}
 
@@ -211,11 +217,11 @@
 	}
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
 	.form {
 
 		&-header {
-			
+
 			&__item {
 				flex-basis: 32%;
 			}
@@ -227,7 +233,7 @@
 	.form {
 
 		&-header {
-			
+
 			&__item {
 				flex-basis: 49%;
 			}
@@ -239,7 +245,7 @@
 	.form {
 
 		&-header {
-			
+
 			&__item {
 				flex-basis: 100%;
 			}
